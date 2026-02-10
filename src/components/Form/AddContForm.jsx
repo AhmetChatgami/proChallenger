@@ -2,21 +2,49 @@ import { useForm } from "react-hook-form";
 import { imageUpload } from "../../utils";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
+import { useMutation } from "@tanstack/react-query";
+import LoadingSpinner from "../Shared/LoadingSpinner";
+import ErrorPage from "../../pages/ErrorPage";
+import toast from "react-hot-toast";
+import { TbFidgetSpinner } from "react-icons/tb";
 
 const AddContForm = () => {
   const { user } = useAuth();
+
+  // useMutation hook (10-24)
+  const { isPending, isError, mutateAsync, reset: mutationReset } = useMutation({
+    mutationFn: async (payload) =>
+      await axios.post(`${import.meta.env.VITE_API_URL}contests`, payload),
+
+    onSuccess: (data) => {
+      console.log(data);
+      toast.success('New Contest Added.')
+      mutationReset()
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+    onMutate: (payload) => {
+      console.log("It will post data", payload);
+    },
+    onSettled: (data, error) => {
+      if (data) console.log("It's from onSettled", data);
+      if (error) console.log(error);
+    },
+    retry: 3,
+  });
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
+    reset,
   } = useForm();
 
   const onSubmit = async (data) => {
     const { name, description, quantity, price, category, image } = data;
     const imageFile = data?.image[0];
 
-   
     try {
       const imageUrl = await imageUpload(imageFile);
       const contestData = {
@@ -33,17 +61,15 @@ const AddContForm = () => {
         },
       };
 
-      const { data } = await axios.post(
-        `${import.meta.env.VITE_API_URL}contests`,
-        contestData,
-      );
-
-      console.table(data);
+      await mutateAsync(contestData);
+      reset()
     } catch (err) {
       console.log(err);
     }
   };
 
+  if (isPending) return <LoadingSpinner />;
+  if (isError) return <ErrorPage />;
   return (
     <div className="w-full min-h-[calc(100vh-40px)] flex flex-col justify-center items-center text-gray-800 rounded-xl bg-gray-50">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -56,7 +82,6 @@ const AddContForm = () => {
               </label>
               <input
                 className="w-full px-4 py-3 text-gray-800 border border-lime-300 focus:outline-lime-500 rounded-md bg-white"
-              
                 id="name"
                 type="text"
                 placeholder="Contest Name"
@@ -75,9 +100,7 @@ const AddContForm = () => {
                 Category
               </label>
               <select
-              
                 className="w-full px-4 py-3 border-lime-300 focus:outline-lime-500 rounded-md bg-white"
-               
                 {...register("category", {
                   required: "Category is required",
                   message: "You must select category",
@@ -192,6 +215,11 @@ const AddContForm = () => {
               className="w-full cursor-pointer p-3 mt-5 text-center font-medium text-white transition duration-200 rounded shadow-md bg-lime-500 "
             >
               Save & Continue
+              {
+                isPending ? (
+                  <TbFidgetSpinner className="animate-spin m-auto"/>
+                ) : ( 'Save & Continue')
+              }
             </button>
           </div>
         </div>
