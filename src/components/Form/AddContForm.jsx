@@ -52,14 +52,14 @@ const AddContForm = () => {
             {/* Name */}
             <div className="space-y-1 text-sm">
               <label htmlFor="name" className="block text-gray-600">
-                Name
+                Contest Name
               </label>
               <input
                 className="w-full px-4 py-3 text-gray-800 border border-lime-300 focus:outline-lime-500 rounded-md bg-white"
-                name="name"
+              
                 id="name"
                 type="text"
-                placeholder="Plant Name"
+                placeholder="Contest Name"
                 {...register("name", {
                   required: "Named is required",
                   minLength: { value: 6, message: "Name is Required" },
@@ -75,9 +75,9 @@ const AddContForm = () => {
                 Category
               </label>
               <select
-                required
+              
                 className="w-full px-4 py-3 border-lime-300 focus:outline-lime-500 rounded-md bg-white"
-                name="category"
+               
                 {...register("category", {
                   required: "Category is required",
                   message: "You must select category",
