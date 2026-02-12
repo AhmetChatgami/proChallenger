@@ -13,7 +13,7 @@ const Contests = () => {
   } = useQuery({
     queryKey: ["contests"],
     queryFn: async () => {
-      const result = await axios(`${import.meta.env.VITE_API_URL}contests`);
+      const result = await axios(`${import.meta.env.VITE_API_URL}/contests`);
       return result.data;
     },
   });

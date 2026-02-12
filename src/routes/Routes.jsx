@@ -16,6 +16,7 @@ import MyOrders from '../pages/Dashboard/Customer/MyOrders'
 import { createBrowserRouter } from 'react-router'
 import ContestDetails from '../pages/ContestDetails/ContestDetails'
 import AddContest from '../pages/Dashboard/Seller/AddContest'
+import PaymentSuccess from '../pages/Payment/PaymentSuccess'
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
       {
         path: '/contest/:id',
         element: <ContestDetails />,
+      },
+      {
+        path: 'payment-success',
+        element: <PaymentSuccess />,
       },
     ],
   },
@@ -52,7 +57,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: 'add-plant',
+        path: 'add-contest',
         element: (
           <PrivateRoute>
             <AddContest />

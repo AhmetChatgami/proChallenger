@@ -14,7 +14,7 @@ const AddContForm = () => {
   // useMutation hook (10-24)
   const { isPending, isError, mutateAsync, reset: mutationReset } = useMutation({
     mutationFn: async (payload) =>
-      await axios.post(`${import.meta.env.VITE_API_URL}contests`, payload),
+      await axios.post(`${import.meta.env.VITE_API_URL}/contests`, payload),
 
     onSuccess: (data) => {
       console.log(data);
