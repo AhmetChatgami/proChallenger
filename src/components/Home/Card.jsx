@@ -36,7 +36,7 @@ const Card = ({contest}) => {
           ></div>
         </div>
         <div className='font-semibold text-lg'>{name}</div>
-        <div> <span className='bg-amber-400 rounded py-1 px-0.5'>Category: </span> {category}</div>
+        <div> <span className='bg-amber-400 rounded py-0.5 px-0.5'>Category:</span> {category}</div>
         <div className=''>Available: {quantity}</div>
         <div className='flex flex-row items-center gap-1'>
           <div className='font-medium text-sm'> Price: ${price}</div>

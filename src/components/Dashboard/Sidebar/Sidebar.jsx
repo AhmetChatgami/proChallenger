@@ -31,7 +31,8 @@ const Sidebar = () => {
         <div>
           <div className='block cursor-pointer p-4 font-bold'>
             <Link to='/'>
-              {/* <img src={logo} alt='logo' width='100' height='100' /> */} <Logo/>
+              {/* <img src={logo} alt='logo' width='100' height='100' /> */}
+               <Logo/>
             </Link>
           </div>
         </div>
