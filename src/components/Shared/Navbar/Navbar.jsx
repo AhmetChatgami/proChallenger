@@ -6,6 +6,7 @@ import useAuth from '../../../hooks/useAuth'
 import avatarImg from '../../../assets/images/placeholder.jpg'
 import proChallenger from '../../../assets/ProChallenger.png'
 import Logo from '../Logo/Logo'
+import AllContests from '../../../pages/AllContests/AllContests'
 const Navbar = () => {
   const { user, logOut } = useAuth()
   const [isOpen, setIsOpen] = useState(false)
@@ -14,11 +15,15 @@ const Navbar = () => {
     <div className='fixed w-full bg-white z-10 shadow-sm'>
       <div className='py-4 '>
         <Container>
+          
           <div className='flex flex-row  items-center justify-between gap-3 md:gap-0'>
             {/* Logo */}
             <Link to='/' >
             <Logo></Logo>
             </Link>
+            <Link to='/dashboard'>Dashboard</Link>
+            <Link to='/'>Home</Link>
+            <Link to='/all-contests'>All Contests</Link>
             {/* Dropdown Menu */}
             <div className='relative'>
               <div className='flex flex-row items-center gap-3'>
@@ -57,8 +62,11 @@ const Navbar = () => {
                           to='/dashboard'
                           className='px-4 py-3 hover:bg-neutral-100 transition font-semibold'
                         >
+                        
                           Dashboard
                         </Link>
+                       <Link to='/all-contests'>All Contests</Link>
+
                         <div
                           onClick={logOut}
                           className='px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer'

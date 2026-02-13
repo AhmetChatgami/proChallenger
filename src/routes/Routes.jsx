@@ -15,6 +15,7 @@ import AddContest from '../pages/Dashboard/Seller/AddContest'
 import PaymentSuccess from '../pages/Payment/PaymentSuccess'
 import MyContests from '../pages/Dashboard/Customer/MyContests'
 import ManageContests from '../pages/Dashboard/Seller/ManageContests'
+import AllContests from '../pages/AllContests/AllContests'
 
 export const router = createBrowserRouter([
   {
@@ -34,10 +35,19 @@ export const router = createBrowserRouter([
         path: 'payment-success',
         element: <PaymentSuccess />,
       },
+      {
+        path: 'all-contests',
+        element: (
+          <PrivateRoute>
+            <AllContests />
+          </PrivateRoute>
+        ),
+      },
     ],
   },
   { path: '/login', element: <Login /> },
   { path: '/signup', element: <SignUp /> },
+  
   {
     path: '/dashboard',
     element: (
@@ -62,6 +72,7 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+     
       {
         path: 'my-inventory',
         element: (
@@ -98,6 +109,7 @@ export const router = createBrowserRouter([
         path: 'manage-contests',
         element: <ManageContests />,
       },
+       
     ],
   },
 ])

@@ -4,7 +4,7 @@ import Contests from "../../components/Home/Contests"
 const Home = () => {
   return (
     <div>
-      <Contests />
+     <h1>this is home page</h1>
       {/* More components */}
     </div>
   )
