@@ -74,7 +74,7 @@ const ContestDetails = () => {
                 gap-2
               "
           >
-            <div>Creator {creator?.name}</div>
+            <div>Creator: {creator?.name}</div>
 
             <img
               className="rounded-full"

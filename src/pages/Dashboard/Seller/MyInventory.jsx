@@ -55,7 +55,7 @@ const MyInventory = () => {
                       scope='col'
                       className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
                     >
-                      Price
+                      Prize Money
                     </th>
                     <th
                       scope='col'
@@ -80,7 +80,7 @@ const MyInventory = () => {
                 </thead>
                 <tbody>
                   {
-                    registered.map(con=>(<ContestDataRow key={con._id} contest={con}/>))
+                    registered.map(contest=>(<ContestDataRow key={contest._id} contest={contest}/>))
                   }
                 </tbody>
               </table>
