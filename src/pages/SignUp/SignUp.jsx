@@ -5,7 +5,7 @@ import { toast } from "react-hot-toast";
 import { TbFidgetSpinner } from "react-icons/tb";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { imageUpload } from "../../utils";
+import { imageUpload, saveOrUpdateUser } from "../../utils";
 
 const SignUp = () => {
   const { createUser, updateUserProfile, signInWithGoogle, loading } =
@@ -42,6 +42,10 @@ const SignUp = () => {
       //3. Save username & profile photo
       await updateUserProfile(name, imageURL);
       console.log(result);
+
+
+      // 4. Save user info in DB
+      await saveOrUpdateUser({name, email, image: imageURL})
 
       navigate(from, { replace: true });
       toast.success("Signup Successful");
