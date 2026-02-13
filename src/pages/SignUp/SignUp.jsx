@@ -86,7 +86,9 @@ const SignUp = () => {
   const handleGoogleSignIn = async () => {
     try {
       // User Registration using google
-      await signInWithGoogle();
+      const {user}= await signInWithGoogle();
+
+       await saveOrUpdateUser({name: user.displayName, email: user.email, image: user.photoURL})
 
       navigate(from, { replace: true });
       toast.success("Signup Successful");
