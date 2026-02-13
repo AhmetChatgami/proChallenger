@@ -9,12 +9,12 @@ import Profile from '../pages/Dashboard/Common/Profile'
 import Statistics from '../pages/Dashboard/Common/Statistics'
 import MainLayout from '../layouts/MainLayout'
 import MyInventory from '../pages/Dashboard/Seller/MyInventory'
-import ManageOrders from '../pages/Dashboard/Seller/ManageOrders'
 import { createBrowserRouter } from 'react-router'
 import ContestDetails from '../pages/ContestDetails/ContestDetails'
 import AddContest from '../pages/Dashboard/Seller/AddContest'
 import PaymentSuccess from '../pages/Payment/PaymentSuccess'
 import MyContests from '../pages/Dashboard/Customer/MyContests'
+import ManageContests from '../pages/Dashboard/Seller/ManageContests'
 
 export const router = createBrowserRouter([
   {
@@ -95,8 +95,8 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: 'manage-orders',
-        element: <ManageOrders />,
+        path: 'manage-contests',
+        element: <ManageContests />,
       },
     ],
   },

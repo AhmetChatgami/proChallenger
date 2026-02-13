@@ -1,6 +1,29 @@
+import axios from 'axios';
 import ContestDataRow from '../../../components/Dashboard/TableRows/ContestDataRow'
+import LoadingSpinner from '../../../components/Shared/LoadingSpinner';
+import ErrorPage from '../../ErrorPage';
+import { useQuery } from '@tanstack/react-query';
+import useAuth from '../../../hooks/useAuth';
 
 const MyInventory = () => {
+
+    const {user}= useAuth();
+    const {
+      data: registered = [],
+      isError,
+      isLoading,
+    } = useQuery({
+      queryKey: ["inventory", user?.email],
+      queryFn: async () => {
+        const result = await axios(`${import.meta.env.VITE_API_URL}/my-inventory/${user?.email}`);
+        return result.data;
+      },
+    });
+  
+    if (isError) return <ErrorPage />;
+    if (isLoading) return <LoadingSpinner />;
+
+
   return (
     <>
       <div className='container mx-auto px-4 sm:px-8'>
@@ -56,7 +79,9 @@ const MyInventory = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <ContestDataRow />
+                  {
+                    registered.map(con=>(<ContestDataRow key={con._id} contest={con}/>))
+                  }
                 </tbody>
               </table>
             </div>

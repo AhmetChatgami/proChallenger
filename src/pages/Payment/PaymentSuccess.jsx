@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router';
 import { IoBagCheckOutline } from "react-icons/io5";
+import toast from 'react-hot-toast';
 
 const PaymentSuccess = () => {
     const [searchParams, setSearchParams]= useSearchParams();
@@ -11,7 +12,7 @@ const PaymentSuccess = () => {
     useEffect(()=>{
         if(sessionId){
             axios.post(`${import.meta.env.VITE_API_URL}/payment-success`, {sessionId})
-        }
+        } toast.success("Registration Successful");
     }, [sessionId])
     return (
         <div className='flex flex-col items-center justify-center'>
