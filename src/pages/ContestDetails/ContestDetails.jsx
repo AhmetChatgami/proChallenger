@@ -19,7 +19,9 @@ const ContestDetails = () => {
   } = useQuery({
     queryKey: ["contest", id],
     queryFn: async () => {
-      const result = await axios(`${import.meta.env.VITE_API_URL}/contests/${id}`);
+      const result = await axios(
+        `${import.meta.env.VITE_API_URL}/contests/${id}`,
+      );
       return result.data;
     },
   });
@@ -28,10 +30,10 @@ const ContestDetails = () => {
     setIsOpen(false);
   };
 
- if (isLoading) return <LoadingSpinner/>
+  if (isLoading) return <LoadingSpinner />;
 
-
-  const {image, name, description, category, price, creator} = contest;
+  const { image, name, description, category, price, creator, quantity } =
+    contest;
   return (
     <Container>
       <div className="mx-auto flex flex-col lg:flex-row justify-between w-full gap-12">
@@ -57,7 +59,8 @@ const ContestDetails = () => {
           <div
             className="
           text-lg font-light text-neutral-500"
-          >{description}
+          >
+            {description}
           </div>
           <hr className="my-6" />
 
@@ -91,19 +94,27 @@ const ContestDetails = () => {
                 text-neutral-500
               "
             >
-              Quantity: {0}
+              Available: {quantity}
             </p>
           </div>
           <hr className="my-6" />
           <div className="flex justify-between">
             <p className="font-bold text-3xl text-gray-500">Price: {price}</p>
             <div>
-              <Button onClick={() => setIsOpen(true)} label="Purchase" />
+              <Button
+                onClick={() => setIsOpen(true)}
+                label={quantity <= 0 ? "Unavailable" : "Register"}
+                disabled={quantity <= 0}
+              />
             </div>
           </div>
           <hr className="my-6" />
 
-          <PurchaseModal contest={contest} closeModal={closeModal} isOpen={isOpen} />
+          <PurchaseModal
+            contest={contest}
+            closeModal={closeModal}
+            isOpen={isOpen}
+          />
         </div>
       </div>
     </Container>
