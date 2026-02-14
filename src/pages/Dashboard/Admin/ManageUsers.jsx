@@ -62,7 +62,7 @@ const ManageUsers = () => {
                 </thead>
                 <tbody>
                   {
-                    users.map(user=><UserDataRow key={user?._id} user={user}/>)
+                    users.map(user=><UserDataRow refetch={refetch} key={user?._id} user={user}/>)
                   }
                 </tbody>
               </table>

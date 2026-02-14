@@ -28,10 +28,10 @@ const UserDataRow = ({user, refetch}) => {
           <span className='relative'>Update Role</span>
         </span>
         {/* Modal */}
-        <UpdateUserRoleModal
-          isOpen={isOpen}
+        <UpdateUserRoleModal user={user}
+          isOpen={isOpen} refetch={refetch}
           closeModal={closeModal}
-          role='customer'
+          
         />
       </td>
     </tr>
