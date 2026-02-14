@@ -4,9 +4,11 @@ import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 import ErrorPage from "../../ErrorPage";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const MyContests = () => {
   const {user}= useAuth();
+  const axiosSecure = useAxiosSecure();
   const {
     data: registered = [],
     isError,
@@ -14,7 +16,7 @@ const MyContests = () => {
   } = useQuery({
     queryKey: ["registered", user?.email],
     queryFn: async () => {
-      const result = await axios(`${import.meta.env.VITE_API_URL}/my-contests/${user?.email}`);
+      const result = await axiosSecure(`/my-contests`);
       return result.data;
     },
   });
