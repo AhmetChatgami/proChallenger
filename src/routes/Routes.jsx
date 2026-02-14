@@ -16,6 +16,7 @@ import PaymentSuccess from '../pages/Payment/PaymentSuccess'
 import MyContests from '../pages/Dashboard/Customer/MyContests'
 import ManageContests from '../pages/Dashboard/Seller/ManageContests'
 import AllContests from '../pages/AllContests/AllContests'
+import UserRequests from '../pages/Dashboard/Admin/UserRequests'
 
 export const router = createBrowserRouter([
   {
@@ -86,6 +87,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <ManageUsers />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: 'users-requests',
+        element: (
+          <PrivateRoute>
+            <UserRequests />
           </PrivateRoute>
         ),
       },
