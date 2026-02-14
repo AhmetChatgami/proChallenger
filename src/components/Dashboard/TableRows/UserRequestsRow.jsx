@@ -1,6 +1,19 @@
+import toast from "react-hot-toast";
+import useAxiosSecure from "../../../hooks/useAxiosSecure"
 
-const UserRequestsRow = ({req}) => {
+const UserRequestsRow = ({req, refetch}) => {
+    const axiosSecure = useAxiosSecure();
 
+    const handleRoleUpdate = async ()=>{
+        try{
+            await axiosSecure.patch('/update-role',{email: req?.email, role: 'creator'})
+            toast.success('Role Updated')
+            refetch()
+        }catch(error) {
+            console.log(error)
+            toast.error('faild to update')
+        }
+    }
   return (
     <tr>
       <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
@@ -12,7 +25,7 @@ const UserRequestsRow = ({req}) => {
      */}
 
       <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-        <span
+        <span onClick={handleRoleUpdate}
 
           className='relative cursor-pointer inline-block px-3 py-1 font-semibold text-green-900 leading-tight'
         >

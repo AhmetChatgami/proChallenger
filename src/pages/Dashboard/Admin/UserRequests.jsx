@@ -13,7 +13,7 @@ const UserRequests = () => {
   const {
     data: requests = [],
     isError,
-    isLoading,
+    isLoading, refetch
   } = useQuery({
     queryKey: ["user-requests", user?.email],
     queryFn: async () => {
@@ -56,7 +56,7 @@ const UserRequests = () => {
               </thead>
               <tbody>
                 {
-                    requests.map(req=><UserRequestsRow key={req._id} req={req}/>)
+                    requests.map(req=><UserRequestsRow refetch={refetch} key={req._id} req={req}/>)
                 }
               </tbody>
             </table>
