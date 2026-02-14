@@ -6,6 +6,7 @@ import { TbFidgetSpinner } from "react-icons/tb";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { imageUpload, saveOrUpdateUser } from "../../utils";
+import ProChallenger from '../../assets/ProChallenger.png';
 
 const SignUp = () => {
   const { createUser, updateUserProfile, signInWithGoogle, loading } =
@@ -34,7 +35,7 @@ const SignUp = () => {
       //   formData,
       // );
 
-      const imageURL = await imageUpload(imageFile)
+      const imageURL = await imageUpload(imageFile);
 
       //2. User Registration
       const result = await createUser(email, password);
@@ -43,9 +44,8 @@ const SignUp = () => {
       await updateUserProfile(name, imageURL);
       console.log(result);
 
-
       // 4. Save user info in DB
-      await saveOrUpdateUser({name, email, image: imageURL})
+      await saveOrUpdateUser({ name, email, image: imageURL });
 
       navigate(from, { replace: true });
       toast.success("Signup Successful");
@@ -86,9 +86,13 @@ const SignUp = () => {
   const handleGoogleSignIn = async () => {
     try {
       // User Registration using google
-      const {user}= await signInWithGoogle();
+      const { user } = await signInWithGoogle();
 
-       await saveOrUpdateUser({name: user.displayName, email: user.email, image: user.photoURL})
+      await saveOrUpdateUser({
+        name: user.displayName,
+        email: user.email,
+        image: user.photoURL,
+      });
 
       navigate(from, { replace: true });
       toast.success("Signup Successful");
@@ -101,6 +105,9 @@ const SignUp = () => {
     <div className="flex justify-center items-center min-h-screen bg-white">
       <div className="flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900">
         <div className="mb-8 text-center">
+          <Link to="/" className="flex justify-center">
+            <img src={ProChallenger} className="size-25" alt="" />
+          </Link>
           <h1 className="my-3 text-4xl font-bold">Sign Up</h1>
           <p className="text-sm text-gray-400">Welcome to ProChallenger</p>
         </div>

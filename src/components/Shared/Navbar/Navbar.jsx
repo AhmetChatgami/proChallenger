@@ -6,6 +6,7 @@ import useAuth from "../../../hooks/useAuth";
 import avatarImg from "../../../assets/images/placeholder.jpg";
 import Logo from "../Logo/Logo";
 
+
 const Navbar = () => {
   const { user, logOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
@@ -74,11 +75,11 @@ const Navbar = () => {
               {isOpen && (
                 <div className="absolute rounded-xl shadow-md w-[40vw] md:w-[10vw] bg-white overflow-hidden right-0 top-12 text-sm">
                   <div className="flex flex-col cursor-pointer">
-                    {/* মোবাইল মেনু: ড্যাশবোর্ড বা হোম এখানেও থাকবে ছোট স্ক্রিনের জন্য */}
+                    
                     <Link
                       to="/"
                       className="block md:hidden px-4 py-3 hover:bg-neutral-100 transition font-semibold"
-                    >
+                    > 
                       Home
                     </Link>
                     <Link
@@ -97,7 +98,7 @@ const Navbar = () => {
                           Dashboard
                         </Link>
                         <Link
-                          to="/dashboard/my-profile"
+                          to="/dashboard/profile"
                           className="px-4 py-3 hover:bg-neutral-100 transition font-semibold"
                         >
                           My Profile
