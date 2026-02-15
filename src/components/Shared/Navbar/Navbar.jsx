@@ -6,13 +6,11 @@ import useAuth from "../../../hooks/useAuth";
 import avatarImg from "../../../assets/images/placeholder.jpg";
 import Logo from "../Logo/Logo";
 
-
 const Navbar = () => {
   const { user, logOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    // z-50 এবং sticky top-0 নিশ্চিত করবে এটি ব্যানারের উপরে থাকবে
     <div className="fixed w-full bg-white sticky top-0 z-50 shadow-sm">
       <div className="py-2 ">
         <Container>
@@ -75,11 +73,10 @@ const Navbar = () => {
               {isOpen && (
                 <div className="absolute rounded-xl shadow-md w-[40vw] md:w-[10vw] bg-white overflow-hidden right-0 top-12 text-sm">
                   <div className="flex flex-col cursor-pointer">
-                    
                     <Link
                       to="/"
                       className="block md:hidden px-4 py-3 hover:bg-neutral-100 transition font-semibold"
-                    > 
+                    >
                       Home
                     </Link>
                     <Link
@@ -92,11 +89,18 @@ const Navbar = () => {
                     {user ? (
                       <>
                         <Link
+                          to="/dashboard/profile"
+                          className="px-4 py-3 hover:bg-neutral-100 transition font-semibold"
+                        >
+                          User: {user?.displayName || "Ghost"}
+                        </Link>
+                        <Link
                           to="/dashboard"
                           className="px-4 py-3 hover:bg-neutral-100 transition font-semibold"
                         >
                           Dashboard
                         </Link>
+                        <p></p>
                         <Link
                           to="/dashboard/profile"
                           className="px-4 py-3 hover:bg-neutral-100 transition font-semibold"
