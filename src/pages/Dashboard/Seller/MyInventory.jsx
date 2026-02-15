@@ -4,10 +4,12 @@ import LoadingSpinner from '../../../components/Shared/LoadingSpinner';
 import ErrorPage from '../../ErrorPage';
 import { useQuery } from '@tanstack/react-query';
 import useAuth from '../../../hooks/useAuth';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const MyInventory = () => {
 
     const {user}= useAuth();
+    const axiosSecure = useAxiosSecure()
     const {
       data: registered = [],
       isError,
@@ -15,7 +17,7 @@ const MyInventory = () => {
     } = useQuery({
       queryKey: ["inventory", user?.email],
       queryFn: async () => {
-        const result = await axios(`${import.meta.env.VITE_API_URL}/my-inventory/${user?.email}`);
+        const result = await axiosSecure.get(`my-inventory/${user?.email}`);
         return result.data;
       },
     });

@@ -7,19 +7,24 @@ import LoadingSpinner from "../Shared/LoadingSpinner";
 import ErrorPage from "../../pages/ErrorPage";
 import toast from "react-hot-toast";
 import { TbFidgetSpinner } from "react-icons/tb";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const AddContForm = () => {
   const { user } = useAuth();
-
-  // useMutation hook (10-24)
-  const { isPending, isError, mutateAsync, reset: mutationReset } = useMutation({
+  const axiosSecure = useAxiosSecure();
+  const {
+    isPending,
+    isError,
+    mutateAsync,
+    reset: mutationReset,
+  } = useMutation({
     mutationFn: async (payload) =>
-      await axios.post(`${import.meta.env.VITE_API_URL}/contests`, payload),
+      // ৩. সাধারণ axios এর বদলে axiosSecure ব্যবহার করুন
+      await axiosSecure.post(`/contests`, payload),
 
     onSuccess: (data) => {
-      console.log(data);
-      toast.success('New Contest Added.')
-      mutationReset()
+      toast.success("New Contest Added.");
+      mutationReset();
     },
     onError: (error) => {
       console.log(error);
@@ -36,13 +41,40 @@ const AddContForm = () => {
   const {
     register,
     handleSubmit,
-    watch,
+
     formState: { errors },
     reset,
   } = useForm();
 
+  // const onSubmit = async (data) => {
+  //   const { name, description, quantity, price, category, image } = data;
+  //   const imageFile = data?.image[0];
+
+  //   try {
+  //     const imageUrl = await imageUpload(imageFile);
+  //     const contestData = {
+  //       image: imageUrl,
+  //       name,
+  //       description,
+  //       quantity: Number(quantity),
+  //       price: Number(price),
+  //       category,
+  //       creator: {
+  //         image: user?.photoURL,
+  //         name: user?.displayName,
+  //         email: user?.email,
+  //       },
+  //     };
+
+  //     await mutateAsync(contestData);
+  //     reset();
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
   const onSubmit = async (data) => {
-    const { name, description, quantity, price, category, image } = data;
+    const { name, description, price, category, deadline, prizeMoney } = data;
     const imageFile = data?.image[0];
 
     try {
@@ -51,9 +83,12 @@ const AddContForm = () => {
         image: imageUrl,
         name,
         description,
-        quantity: Number(quantity),
         price: Number(price),
         category,
+        deadline,
+        prizeMoney: Number(prizeMoney),
+        participantsCount: 0,
+        winner: null,
         creator: {
           image: user?.photoURL,
           name: user?.displayName,
@@ -62,9 +97,10 @@ const AddContForm = () => {
       };
 
       await mutateAsync(contestData);
-      reset()
+      reset();
     } catch (err) {
       console.log(err);
+      toast.error("Failed to add contest");
     }
   };
 
@@ -134,6 +170,45 @@ const AddContForm = () => {
               {errors.description && (
                 <p className="text-red-500">{errors.description.message}</p>
               )}
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              {/* Deadline Input */}
+              <div className="space-y-1 text-sm">
+                <label htmlFor="deadline" className="block text-gray-600">
+                  Contest Deadline
+                </label>
+                <input
+                  className="w-full px-4 py-3 text-gray-800 border border-lime-300 focus:outline-lime-500 rounded-md bg-white"
+                  id="deadline"
+                  type="date" // Date Selection
+                  {...register("deadline", {
+                    required: "Deadline is required",
+                  })}
+                />
+                {errors.deadline && (
+                  <p className="text-red-500">{errors.deadline.message}</p>
+                )}
+              </div>
+
+              {/* Prize Money Input */}
+              <div className="space-y-1 text-sm">
+                <label htmlFor="prizeMoney" className="block text-gray-600">
+                  Prize Money ($)
+                </label>
+                <input
+                  className="w-full px-4 py-3 text-gray-800 border border-lime-300 focus:outline-lime-500 rounded-md bg-white"
+                  id="prizeMoney"
+                  type="number"
+                  placeholder="Enter Prize Amount"
+                  {...register("prizeMoney", {
+                    required: "Prize money is required",
+                    min: { value: 1, message: "Prize must be at least 1" },
+                  })}
+                />
+                {errors.prizeMoney && (
+                  <p className="text-red-500">{errors.prizeMoney.message}</p>
+                )}
+              </div>
             </div>
           </div>
           <div className="space-y-6 flex flex-col">
@@ -212,14 +287,14 @@ const AddContForm = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full cursor-pointer p-3 mt-5 text-center font-medium text-white transition duration-200 rounded shadow-md bg-lime-500 "
+              disabled={isPending}
+              className="w-full cursor-pointer p-3 mt-5 text-center font-medium text-white transition duration-200 rounded shadow-md bg-lime-500 disabled:bg-gray-400"
             >
-              Save & Continue
-              {
-                isPending ? (
-                  <TbFidgetSpinner className="animate-spin m-auto"/>
-                ) : ( 'Save & Continue')
-              }
+              {isPending ? (
+                <TbFidgetSpinner className="animate-spin m-auto" size={24} />
+              ) : (
+                "Save & Continue"
+              )}
             </button>
           </div>
         </div>
